@@ -1,4 +1,3 @@
-using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Windows.OPM;
 using System;
@@ -113,6 +112,7 @@ namespace OPMNetSample
         }
 
     }
+
     #endregion
 
     #region Application Entry Point

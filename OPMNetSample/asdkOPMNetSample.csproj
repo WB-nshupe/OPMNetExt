@@ -38,28 +38,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcCoreMgd">
-      <HintPath>..\..\..\..\..\..\ObjectARX 2024\inc\AcCoreMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcCui">
-      <HintPath>..\..\..\..\..\..\ObjectARX 2024\inc\AcCui.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="AcDbMgd">
       <HintPath>..\..\..\..\..\..\ObjectARX 2024\inc\AcDbMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AcMgd">
-      <HintPath>..\..\..\..\..\..\ObjectARX 2024\inc\AcMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows">
-      <HintPath>..\..\..\..\..\..\ObjectARX 2024\inc\AdWindows.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="customPropertySample.cs" />
