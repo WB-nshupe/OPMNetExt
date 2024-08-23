@@ -47,7 +47,8 @@ namespace Autodesk
             [InteropServices::Out] System::Guid% propGUID
           );
           void GetDisplayName(
-            [InteropServices::Out,
+            [InteropServices::In,
+             InteropServices::Out,
              InteropServices::MarshalAs(
               InteropServices::UnmanagedType::BStr
              )
@@ -64,14 +65,16 @@ namespace Autodesk
             [InteropServices::Out] System::Int32% bReadonly
           );
           void GetDescription(
-            [InteropServices::Out,
+            [InteropServices::In,
+             InteropServices::Out,
              InteropServices::MarshalAs(
                InteropServices::UnmanagedType::BStr
              )
             ] interior_ptr<System::String^> description
           );
           void GetCurrentValueName(
-            [InteropServices::Out,
+            [InteropServices::In,
+             InteropServices::Out,
              InteropServices::MarshalAs(
                InteropServices::UnmanagedType::BStr
              )

@@ -3,6 +3,7 @@ using Autodesk.AutoCAD.Windows.OPM;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Autodesk.AutoCAD.DatabaseServices;
 
 namespace OPMNetSample
 {
@@ -36,8 +37,8 @@ namespace OPMNetSample
             propGUID = new Guid("F60AE3DA-0373-4d24-82D2-B2646517ABCB");
         }
 
-        // Property display name
-        void IDynamicProperty2.GetDisplayName(out string szName)
+        // Property display nameD
+        void IDynamicProperty2.GetDisplayName(ref string szName)
         {
             szName = "My integer property";
         }
@@ -55,7 +56,8 @@ namespace OPMNetSample
         }
 
         // Get the property description string
-        void IDynamicProperty2.GetDescription(out string szName)
+
+        void IDynamicProperty2.GetDescription(ref string szName)
         {
             szName = "This property is an integer";
         }
@@ -63,7 +65,7 @@ namespace OPMNetSample
         // OPM will typically display these in an edit field
         // optional: meta data representing property type name,
         // ex. ACAD_ANGLE
-        void IDynamicProperty2.GetCurrentValueName(out string szName)
+        void IDynamicProperty2.GetCurrentValueName(ref string szName)
         {
             throw new System.NotImplementedException();
         }
@@ -84,8 +86,24 @@ namespace OPMNetSample
         void IDynamicProperty2.GetCurrentValueData(object pUnk, ref object pVarData)
         {
             // TODO: Get the value and return it to AutoCAD
-
+            int temp = 4;
             // Because we said the value type was a 32b int (VT_I4)
+
+            // Convert the COM object to a managed object
+            //IntPtr pUnkIntPtr = Marshal.GetIUnknownForObject(pUnk);
+            //Line line = (Line)Marshal.GetObjectForIUnknown(pUnkIntPtr);
+
+            var id = DBObject.FromAcadObject(pUnk);
+
+            using (Transaction tr = new OpenCloseTransaction())
+            {
+                Line l = !id.IsNull ? tr.GetObject(id, OpenMode.ForRead) as Line : null;
+
+                tr.Abort();
+            }
+
+            
+
             pVarData = (int)4;
         }
 

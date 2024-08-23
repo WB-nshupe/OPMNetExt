@@ -37,9 +37,7 @@ namespace Autodesk
     {
       namespace OPM
       {
-        [Autodesk::AutoCAD::Runtime::Wrapper(
-          "OPMPropertyExtensionFactory"
-         )]
+        [Autodesk::AutoCAD::Runtime::Wrapper("OPMPropertyExtensionFactory")]
         public ref class AcMgdOPMPropertyExtensionFactory : public RXObject
         {
         public protected:
