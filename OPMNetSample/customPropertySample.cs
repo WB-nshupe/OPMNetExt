@@ -134,7 +134,7 @@ namespace OPMNetSample
         public void GetCategoryName(int propcat, uint lcid, ref string pbstrName)
         {
             if (propcat != 1) pbstrName = string.Empty;
-            pbstrName = "Warmboard Properties";
+            pbstrName = "My Properties";
         }
     }
 
@@ -146,7 +146,7 @@ namespace OPMNetSample
 
     [
         Guid("c71ff811-8b0d-4f64-ac6b-1b8fd206f71f"),
-        ProgId("OPMNetSample.CustomEnumProperty.2"),
+        ProgId("OPMNetSample.CustomEnumProperty.1"),
 
         // No class interface is generated for this class and
         // no interface is marked as the default.
@@ -204,7 +204,7 @@ namespace OPMNetSample
         // ex. ACAD_ANGLE
         void IDynamicProperty2.GetCurrentValueName(ref string szName)
         {
-            throw new System.NotImplementedException();
+            szName = null;
         }
 
         // What is the property type, ex. VT_R8
@@ -214,6 +214,15 @@ namespace OPMNetSample
             // types for dynamic properties:
             // VT_I2, VT_I4, VT_R4, VT_R8,VT_BSTR, VT_BOOL
             // and VT_USERDEFINED. 
+            /*
+               * VT_I2 => 2
+               * VT_I4 => 3
+               * VT_R4 => 4
+               * VT_R8 => 5
+               * VT_BSTR => 8
+               * VT_BOOL => 11
+               * VT_USERDEFINED => 29
+             */
 
             varType = 3;
         }
@@ -223,7 +232,7 @@ namespace OPMNetSample
         void IDynamicProperty2.GetCurrentValueData(object pUnk, ref object pVarData)
         {
             // TODO: Get the value and return it to AutoCAD
-            int temp = 4;
+            int temp = 1;
             // Because we said the value type was a 32b int (VT_I4)
 
             // Convert the COM object to a managed object
@@ -277,7 +286,7 @@ namespace OPMNetSample
         public void GetCategoryName(int propcat, uint lcid, ref string pbstrName)
         {
             if (propcat != 1) pbstrName = string.Empty;
-            pbstrName = "Warmboard Properties";
+            pbstrName = "My Properties";
         }
 
 
