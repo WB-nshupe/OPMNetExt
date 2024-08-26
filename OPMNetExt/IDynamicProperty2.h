@@ -22,6 +22,8 @@
 
 #pragma once
 
+typedef int PROPCAT;
+
 using namespace System;
 using namespace System::Runtime;
 using namespace System::Runtime::InteropServices;
@@ -38,111 +40,171 @@ namespace Autodesk
     {
       namespace OPM
       {
-        [InteropServices::Guid("9CAF41C2-CA86-4ffb-B05A-AC43C424D076")]
-        [InteropServices::InterfaceTypeAttribute(InteropServices::ComInterfaceType::InterfaceIsIUnknown)]
-        [InteropServices::ComVisible(true)]
-        public interface class IDynamicProperty2
-        {
-          void GetGUID(
-            [InteropServices::Out] System::Guid% propGUID
-          );
-          void GetDisplayName(
-            [InteropServices::In,
-             InteropServices::Out,
-             InteropServices::MarshalAs(
-              InteropServices::UnmanagedType::BStr
-             )
-            ] interior_ptr<System::String^> name);
-          void IsPropertyEnabled(
-            [InteropServices::In,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::IUnknown
-             )
-            ] Object^ pUnk,
-            [InteropServices::Out] System::Int32% bEnabled
-          );
-          void IsPropertyReadOnly(
-            [InteropServices::Out] System::Int32% bReadonly
-          );
-          void GetDescription(
-            [InteropServices::In,
-             InteropServices::Out,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::BStr
-             )
-            ] interior_ptr<System::String^> description
-          );
-          void GetCurrentValueName(
-            [InteropServices::In,
-             InteropServices::Out,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::BStr
-             )
-            ] interior_ptr<System::String^> name
-          );
-          void GetCurrentValueType(
-            [InteropServices::Out] ushort% pVarType
-          );
-          void GetCurrentValueData(
-            [InteropServices::In,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::IUnknown
-             )
-            ] Object^ pUnk,
-            [InteropServices::In,
-             InteropServices::Out,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::Struct
-             )
-            ] interior_ptr<Object^> varData
-          );
-          void SetCurrentValueData(
-            [InteropServices::In,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::IUnknown
-             )
-            ] Object^ pUnk,
-            [InteropServices::In,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::Struct
-             )
-            ] Object^ varData
-          );
-          void Connect(
-            [InteropServices::In,
-             InteropServices::MarshalAs(
-               /*IDynamicPropertyNotify2*/
-               InteropServices::UnmanagedType::IUnknown
-             )
-            ] Object^ pSink
-          );
-          void Disconnect();
-        };
-        [InteropServices::Guid(
-           "975112B5-5403-4197-AFB8-90C6CA73B9E1"
-        )]
-        [InteropServices::InterfaceTypeAttribute(
-           InteropServices::ComInterfaceType::InterfaceIsIUnknown
-        )]
-        [InteropServices::ComVisible(true)]
-        public interface class IDynamicPropertyNotify2
-        {
-          void OnChanged(
-            [InteropServices::In,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::IUnknown
-             )
-            ] Object^ pDynamicProperty
-          );
-          void GetCurrentSelectionSet(
-            [InteropServices::In,
-             InteropServices::Out,
-             InteropServices::MarshalAs(
-               InteropServices::UnmanagedType::Struct
-             )
-            ] interior_ptr<Object^> pSelection
-          );
-        };
+        #pragma region IDynamicProperty2
+
+          [InteropServices::Guid("9CAF41C2-CA86-4ffb-B05A-AC43C424D076")]
+              [InteropServices::InterfaceTypeAttribute(InteropServices::ComInterfaceType::InterfaceIsIUnknown)]
+              [InteropServices::ComVisible(true)]
+              public interface class IDynamicProperty2
+          {
+              void GetGUID(
+                  [InteropServices::Out] System::Guid% propGUID
+              );
+              void GetDisplayName(
+                  [InteropServices::In,
+                  InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::BStr
+                  )
+                  ] interior_ptr<System::String^> name);
+              void IsPropertyEnabled(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pUnk,
+                  [InteropServices::Out] System::Int32% bEnabled
+              );
+              void IsPropertyReadOnly(
+                  [InteropServices::Out] System::Int32% bReadonly
+              );
+              void GetDescription(
+                  [InteropServices::In,
+                  InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::BStr
+                  )
+                  ] interior_ptr<System::String^> description
+              );
+              void GetCurrentValueName(
+                  [InteropServices::In,
+                  InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::BStr
+                  )
+                  ] interior_ptr<System::String^> name
+              );
+              void GetCurrentValueType(
+                  [InteropServices::Out] ushort% pVarType
+              );
+              void GetCurrentValueData(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pUnk,
+                  [InteropServices::In,
+                  InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::Struct
+                  )
+                  ] interior_ptr<Object^> varData
+              );
+              void SetCurrentValueData(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pUnk,
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::Struct
+                  )
+                  ] Object^ varData
+              );
+              void Connect(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      /*IDynamicPropertyNotify2*/
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pSink
+              );
+              void Disconnect();
+          };
+
+        #pragma endregion
+
+          
+        #pragma region IDyanmicPropertyNotify2
+
+          [InteropServices::Guid(
+              "975112B5-5403-4197-AFB8-90C6CA73B9E1"
+          )]
+              [InteropServices::InterfaceTypeAttribute(
+                  InteropServices::ComInterfaceType::InterfaceIsIUnknown
+              )]
+              [InteropServices::ComVisible(true)]
+              public interface class IDynamicPropertyNotify2
+          {
+              void OnChanged(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pDynamicProperty
+              );
+              void GetCurrentSelectionSet(
+                  [InteropServices::In,
+                  InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::Struct
+                  )
+                  ] interior_ptr<Object^> pSelection
+              );
+          };
+
+        #pragma endregion
+
+
+
+        #pragma region ICategorizeProperties
+
+          [InteropServices::Guid("4D07FC10-F931-11ce-B001-00AA006884E5")]
+              [InterfaceType(ComInterfaceType::InterfaceIsIUnknown)]
+              [ComVisible(true)]
+              public interface class ICategorizeProperties
+          {
+              void MapPropertyToCategory(
+                  [In] int dispid,
+                  [In, Out] interior_ptr<PROPCAT> ppropcat
+              );
+
+              void GetCategoryName(
+                  [In] PROPCAT propcat,
+                  [In] LCID lcid,
+                  [In, Out, MarshalAs(UnmanagedType::BStr)] interior_ptr<String^> pbstrName
+              );
+          };
+
+        #pragma endregion
+
+        
+        #pragma region IDynamicEnumProperty
+
+          [InteropServices::Guid("8B384028-ACB1-11d1-A2B4-080009DC639A")]
+              [InterfaceType(ComInterfaceType::InterfaceIsIUnknown)]
+              [ComVisible(true)]
+              public interface class IDynamicEnumProperty
+          {
+              void GetNumPropertyValues(
+                  [In, Out] interior_ptr<int> numValues
+              );
+
+              void GetPropValueName(
+                  [In] int index,
+                  [In, Out, MarshalAs(UnmanagedType::BStr)] interior_ptr<String^> valueName
+              );
+
+              void GetPropValueData(
+                  [In] int index,
+                  [In, Out] interior_ptr<Object^> valueData
+              );
+          };
+
+        #pragma endregion
+        
+
       }
     }
   }

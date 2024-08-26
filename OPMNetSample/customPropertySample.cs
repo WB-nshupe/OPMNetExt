@@ -28,7 +28,7 @@ namespace OPMNetSample
         ComDefaultInterface(typeof(IDynamicProperty2)),
         ComVisible(true)
     ]
-    public class CustomProp : IDynamicProperty2 {
+    public class CustomProp : IDynamicProperty2, ICategorizeProperties {
         private IDynamicPropertyNotify2 m_pSink =null;
 
        // Unique property ID
@@ -90,9 +90,6 @@ namespace OPMNetSample
             // Because we said the value type was a 32b int (VT_I4)
 
             // Convert the COM object to a managed object
-            //IntPtr pUnkIntPtr = Marshal.GetIUnknownForObject(pUnk);
-            //Line line = (Line)Marshal.GetObjectForIUnknown(pUnkIntPtr);
-
             var id = DBObject.FromAcadObject(pUnk);
 
             using (Transaction tr = new OpenCloseTransaction())
@@ -129,6 +126,193 @@ namespace OPMNetSample
             m_pSink = null;
         }
 
+        public void MapPropertyToCategory(int dispid, ref int ppropcat)
+        {
+            ppropcat = 1;
+        }
+
+        public void GetCategoryName(int propcat, uint lcid, ref string pbstrName)
+        {
+            if (propcat != 1) pbstrName = string.Empty;
+            pbstrName = "Warmboard Properties";
+        }
+    }
+
+
+
+    #endregion
+
+    #region Enum Prop
+
+    [
+        Guid("c71ff811-8b0d-4f64-ac6b-1b8fd206f71f"),
+        ProgId("OPMNetSample.CustomEnumProperty.2"),
+
+        // No class interface is generated for this class and
+        // no interface is marked as the default.
+        // Users are expected to expose functionality through
+        // interfaces that will be explicitly exposed by the object
+        // This means the object can only expose interfaces we define
+
+        ClassInterface(ClassInterfaceType.None),
+        // Set the default COM interface that will be used for
+        // Automation. Languages like: C#, C++ and VB allow to 
+        //query for interface's we're interested in but Automation 
+        // only aware languages like javascript do not allow to 
+        // query interface(s) and create only the default one
+
+        ComDefaultInterface(typeof(IDynamicEnumProperty)),
+        ComVisible(true)
+    ]
+    public class CustomEnumProp : IDynamicProperty2, ICategorizeProperties, IDynamicEnumProperty
+    {
+        private IDynamicPropertyNotify2 m_pSink = null;
+
+        // Unique property ID
+        void IDynamicProperty2.GetGUID(out Guid propGUID)
+        {
+            propGUID = new Guid("c71ff811-8b0d-4f64-ac6b-1b8fd206f71f");
+        }
+
+        // Property display nameD
+        void IDynamicProperty2.GetDisplayName(ref string szName)
+        {
+            szName = "My enum property";
+        }
+
+        // Show/Hide property in the OPM, for this object instance
+        void IDynamicProperty2.IsPropertyEnabled(object pUnk, out int bEnabled)
+        {
+            bEnabled = 1;
+        }
+
+        // Is property showing but disabled
+        void IDynamicProperty2.IsPropertyReadOnly(out int bReadonly)
+        {
+            bReadonly = 0;
+        }
+
+        // Get the property description string
+
+        void IDynamicProperty2.GetDescription(ref string szName)
+        {
+            szName = "This property is an enum";
+        }
+
+        // OPM will typically display these in an edit field
+        // optional: meta data representing property type name,
+        // ex. ACAD_ANGLE
+        void IDynamicProperty2.GetCurrentValueName(ref string szName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        // What is the property type, ex. VT_R8
+        void IDynamicProperty2.GetCurrentValueType(out ushort varType)
+        {
+            // The Property Inspector supports the following data
+            // types for dynamic properties:
+            // VT_I2, VT_I4, VT_R4, VT_R8,VT_BSTR, VT_BOOL
+            // and VT_USERDEFINED. 
+
+            varType = 3;
+        }
+
+        // Get the property value, passes the specific object
+        // we need the property value for.
+        void IDynamicProperty2.GetCurrentValueData(object pUnk, ref object pVarData)
+        {
+            // TODO: Get the value and return it to AutoCAD
+            int temp = 4;
+            // Because we said the value type was a 32b int (VT_I4)
+
+            // Convert the COM object to a managed object
+            //IntPtr pUnkIntPtr = Marshal.GetIUnknownForObject(pUnk);
+            //Line line = (Line)Marshal.GetObjectForIUnknown(pUnkIntPtr);
+
+            //var id = DBObject.FromAcadObject(pUnk);
+
+            //using (Transaction tr = new OpenCloseTransaction())
+            //{
+            //    Line l = !id.IsNull ? tr.GetObject(id, OpenMode.ForRead) as Line : null;
+
+            //    tr.Abort();
+            //}
+
+
+
+            pVarData = (int)1;
+        }
+
+        // Set the property value, passes the specific object we
+        // want to set the property value for
+        void IDynamicProperty2.SetCurrentValueData(object pUnk, object varData)
+        {
+            // TODO: Save the value returned to you
+
+            // Because we said the value type was a 32b int (VT_I4)
+            int myVal = (int)varData;
+        }
+
+        // OPM passes its implementation of IDynamicPropertyNotify, you
+        // cache it and call it to inform OPM your property has changed
+        void IDynamicProperty2.Connect(object pSink)
+        {
+            m_pSink = (IDynamicPropertyNotify2)pSink;
+        }
+
+        void IDynamicProperty2.Disconnect()
+        {
+            m_pSink = null;
+        }
+
+
+
+
+        public void MapPropertyToCategory(int dispid, ref int ppropcat)
+        {
+            ppropcat = 1;
+        }
+
+        public void GetCategoryName(int propcat, uint lcid, ref string pbstrName)
+        {
+            if (propcat != 1) pbstrName = string.Empty;
+            pbstrName = "Warmboard Properties";
+        }
+
+
+
+        private readonly string[] m_enumValues = { "Option 1", "Option 2", "Option 3" };
+
+        void IDynamicEnumProperty.GetNumPropertyValues(ref int numValues)
+        {
+            numValues = m_enumValues.Length;
+        }
+
+        void IDynamicEnumProperty.GetPropValueName(int index, ref string valueName)
+        {
+            if (index >= 0 && index < m_enumValues.Length)
+            {
+                valueName = m_enumValues[index];
+            }
+            else
+            {
+                valueName = string.Empty;
+            }
+        }
+
+        void IDynamicEnumProperty.GetPropValueData(int index, ref object valueData)
+        {
+            if (index >= 0 && index < m_enumValues.Length)
+            {
+                valueData = m_enumValues[index];
+            }
+            else
+            {
+                valueData = null;
+            }
+        }
+
     }
 
     #endregion
@@ -136,6 +320,7 @@ namespace OPMNetSample
     #region Application Entry Point
     public class MyEntryPoint : IExtensionApplication {
         protected internal CustomProp custProp = null;
+        protected internal CustomEnumProp enumProp = null;
 
         public void Initialize () {
             Assembly.LoadFrom("asdkOPMNetExt.dll");
@@ -147,6 +332,9 @@ namespace OPMNetSample
 
             custProp =new CustomProp();
             pPropMan.AddProperty((object)custProp);
+
+            enumProp = new CustomEnumProp();
+            pPropMan.AddProperty((object)enumProp);
         }
 
         public void Terminate () {
@@ -157,6 +345,9 @@ namespace OPMNetSample
 
             pPropMan.RemoveProperty((object)custProp);
             custProp =null;
+
+            pPropMan.RemoveProperty((object)enumProp);
+            enumProp = null;
         }
 
     }
