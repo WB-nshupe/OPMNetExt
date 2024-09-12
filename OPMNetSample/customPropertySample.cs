@@ -8,6 +8,9 @@ using Autodesk.AutoCAD.DatabaseServices;
 namespace OPMNetSample
 {
     #region Our Custom Property
+
+    #region COM Stuff
+
     [
         Guid("F60AE3DA-0373-4d24-82D2-B2646517ABCB"),
         ProgId("OPMNetSample.CustomProperty.1"),
@@ -28,6 +31,8 @@ namespace OPMNetSample
         ComDefaultInterface(typeof(IDynamicProperty2)),
         ComVisible(true)
     ]
+
+    #endregion
     public class CustomProp : IDynamicProperty2, ICategorizeProperties {
         private IDynamicPropertyNotify2 m_pSink =null;
 
@@ -144,6 +149,8 @@ namespace OPMNetSample
 
     #region Enum Prop
 
+    #region Com Stuff
+
     [
         Guid("c71ff811-8b0d-4f64-ac6b-1b8fd206f71f"),
         ProgId("OPMNetSample.CustomEnumProperty.1"),
@@ -164,8 +171,12 @@ namespace OPMNetSample
         ComDefaultInterface(typeof(IDynamicEnumProperty)),
         ComVisible(true)
     ]
+
+    #endregion
     public class CustomEnumProp : IDynamicProperty2, ICategorizeProperties, IDynamicEnumProperty
     {
+        #region IDynamicProperty2
+
         private IDynamicPropertyNotify2 m_pSink = null;
 
         // Unique property ID
@@ -204,7 +215,7 @@ namespace OPMNetSample
         // ex. ACAD_ANGLE
         void IDynamicProperty2.GetCurrentValueName(ref string szName)
         {
-            szName = null;
+            szName = string.Empty;
         }
 
         // What is the property type, ex. VT_R8
@@ -224,7 +235,7 @@ namespace OPMNetSample
                * VT_USERDEFINED => 29
              */
 
-            varType = 3;
+            varType = 8;
         }
 
         // Get the property value, passes the specific object
@@ -250,7 +261,7 @@ namespace OPMNetSample
 
 
 
-            pVarData = (int)1;
+            pVarData = m_enumValues[1];
         }
 
         // Set the property value, passes the specific object we
@@ -275,7 +286,68 @@ namespace OPMNetSample
             m_pSink = null;
         }
 
+        #endregion
 
+        #region IDynamicProperty
+
+        //private IDynamicPropertyNotify m_pSink = null;
+
+        //public void GetGUID(out Guid propGUID)
+        //{
+        //    propGUID = new Guid("c71ff811-8b0d-4f64-ac6b-1b8fd206f71f");
+        //}
+
+        //public void GetDisplayName(ref string bstrName)
+        //{
+        //    bstrName = "My enum property";
+        //}
+
+        //public void IsPropertyEnabled(IntPtr objectID, out bool pbEnabled)
+        //{
+        //    pbEnabled = true;
+        //}
+
+        //public void IsPropertyReadOnly(out bool pbReadonly)
+        //{
+        //    pbReadonly = false;
+        //}
+
+        //public void GetDescription(ref string bstrName)
+        //{
+        //    bstrName = "Please work";
+        //}
+
+        //public void GetCurrentValueName(ref string pbstrName)
+        //{
+        //    pbstrName = string.Empty;
+        //}
+
+        //public void GetCurrentValueType(out ushort pVarType)
+        //{
+        //    pVarType = 8;
+        //}
+
+        //public void GetCurrentValueData(IntPtr objectID, out object pvarData)
+        //{
+        //    pvarData = m_enumValues[1];
+        //}
+
+        //public void SetCurrentValueData(IntPtr objectID, object varData)
+        //{
+
+        //}
+
+        //public void Connect(object pSink)
+        //{
+        //    m_pSink = (IDynamicPropertyNotify)pSink;
+        //}
+
+        //public void Disconnect()
+        //{
+        //    m_pSink = null;
+        //}
+
+        #endregion
 
 
         public void MapPropertyToCategory(int dispid, ref int ppropcat)
@@ -322,6 +394,7 @@ namespace OPMNetSample
             }
         }
 
+        
     }
 
     #endregion
@@ -332,7 +405,7 @@ namespace OPMNetSample
         protected internal CustomEnumProp enumProp = null;
 
         public void Initialize () {
-            Assembly.LoadFrom("asdkOPMNetExt.dll");
+            Assembly.LoadFrom(@"C:\Users\nshupe\source\repos\OPMNetExt\x64\Debug\asdkOPMNetExt.dll");
 
             // Add the Dynamic Property
             Dictionary classDict =SystemObjects.ClassDictionary;
@@ -342,6 +415,8 @@ namespace OPMNetSample
             custProp =new CustomProp();
             pPropMan.AddProperty((object)custProp);
 
+            //IPropertyManager propMan = (IPropertyManager)xOPM.xGET_OPMPROPERTY_MANAGER(lineDesc);
+            
             enumProp = new CustomEnumProp();
             pPropMan.AddProperty((object)enumProp);
         }
@@ -354,6 +429,8 @@ namespace OPMNetSample
 
             pPropMan.RemoveProperty((object)custProp);
             custProp =null;
+
+            //IPropertyManager propMan = (IPropertyManager)xOPM.xGET_OPMPROPERTY_MANAGER(lineDesc);
 
             pPropMan.RemoveProperty((object)enumProp);
             enumProp = null;

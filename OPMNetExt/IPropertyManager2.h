@@ -36,68 +36,140 @@ namespace Autodesk
     {
       namespace OPM
       {
-        [InteropServices::Guid(
-          "FABC1C70-1044-4aa0-BF8D-91FFF9052715"
-         )]
-        [InteropServices::InterfaceTypeAttribute(
-          InteropServices::ComInterfaceType::InterfaceIsIUnknown
-         )]
-        [InteropServices::ComVisible(true)]
+        #pragma region IPropertyManager2
 
-        public interface class IPropertyManager2
-        {
-          void AddProperty(
-            [InteropServices::In,
-              InteropServices::MarshalAs(
-                InteropServices::UnmanagedType::IUnknown
-              )
-            ] Object^ pDynPropObj
-          );
-          void RemoveProperty(
-            [InteropServices::In,
-              InteropServices::MarshalAs(
-                InteropServices::UnmanagedType::IUnknown
-              )
-            ] Object^ pDynPropObj
-          );
-          void GetDynamicProperty(
-            [InteropServices::In] long index,
-            [InteropServices::Out,
-              InteropServices::MarshalAs(
-                InteropServices::UnmanagedType::IUnknown
-              )
-            ] interior_ptr<Object^> value
-          );
-          void GetDynamicPropertyByName(
-            [InteropServices::In,
-              InteropServices::MarshalAs(
-                InteropServices::UnmanagedType::BStr
-              )
-            ] System::String^ name,
-            [InteropServices::Out,
-              InteropServices::MarshalAs(
-                InteropServices::UnmanagedType::IUnknown
-              )
-            ] interior_ptr<Object^> value
-          );
-          void GetDynamicPropertyCountEx(
-            [InteropServices::Out] long* count
-            );
-          void GetDynamicClassInfo(
-            [InteropServices::In,
-              InteropServices::MarshalAs(
-                InteropServices::UnmanagedType::IUnknown
-              )
-            ] Object^ pDynPropObj,
-            [InteropServices::Out,
-              InteropServices::MarshalAs(
-                /*InteropServices::UnmanagedType::ITypeInfo*/
-                InteropServices::UnmanagedType::IUnknown
-              )
-            ] interior_ptr<Object^> typeInfo,
-            [InteropServices::Out] unsigned long* dwCookie
-          );
-        };
+          [InteropServices::Guid(
+              "FABC1C70-1044-4aa0-BF8D-91FFF9052715"
+          )]
+              [InteropServices::InterfaceTypeAttribute(
+                  InteropServices::ComInterfaceType::InterfaceIsIUnknown
+              )]
+              [InteropServices::ComVisible(true)]
+
+              public interface class IPropertyManager2
+          {
+              void AddProperty(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pDynPropObj
+              );
+              void RemoveProperty(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pDynPropObj
+              );
+              void GetDynamicProperty(
+                  [InteropServices::In] long index,
+                  [InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] interior_ptr<Object^> value
+              );
+              void GetDynamicPropertyByName(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::BStr
+                  )
+                  ] System::String^ name,
+                  [InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] interior_ptr<Object^> value
+              );
+              void GetDynamicPropertyCountEx(
+                  [InteropServices::Out] long* count
+              );
+              void GetDynamicClassInfo(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pDynPropObj,
+                  [InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      /*InteropServices::UnmanagedType::ITypeInfo*/
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] interior_ptr<Object^> typeInfo,
+                  [InteropServices::Out] unsigned long* dwCookie
+              );
+          };
+
+        #pragma endregion
+
+
+        #pragma region IPropertyManager
+
+          [InteropServices::Guid("8B384028-ACA9-11d1-A2B4-080009DC639A")]
+              [InteropServices::InterfaceTypeAttribute(
+                  InteropServices::ComInterfaceType::InterfaceIsIUnknown
+              )]
+              [InteropServices::ComVisible(true)]
+
+              public interface class IPropertyManager
+          {
+              void AddProperty(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pProperty
+              );
+              void RemoveProperty(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pProperty
+              );
+              void GetDynamicProperty(
+                  [InteropServices::In] long index,
+                  [InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] interior_ptr<Object^> pProperty
+              );
+              void GetDynamicPropertyByName(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::BStr
+                  )
+                  ] System::String^ propName,
+                  [InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] interior_ptr<Object^> pProperty
+              );
+              void GetDynamicPropertyCount(
+                  [InteropServices::Out] long* count
+              );
+              void GetDynamicClassInfo(
+                  [InteropServices::In,
+                  InteropServices::MarshalAs(
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] Object^ pObj,
+                  [InteropServices::Out,
+                  InteropServices::MarshalAs(
+                      /*InteropServices::UnmanagedType::ITypeInfo*/
+                      InteropServices::UnmanagedType::IUnknown
+                  )
+                  ] interior_ptr<Object^> pptiDynamic,
+                  [InteropServices::Out] unsigned long* dwCookie
+              );
+          };
+
+        #pragma endregion
+
+
       }
     }
   }
